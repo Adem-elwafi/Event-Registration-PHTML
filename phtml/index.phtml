@@ -1,0 +1,113 @@
+<!-- Hero Section -->
+<section class="hero-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4 animate__animated animate__fadeInLeft">
+                    Gestion Complète d'Événements
+                </h1>
+                <p class="lead mb-4 animate__animated animate__fadeInLeft animate__delay-1s">
+                    Gérez facilement vos événements, participants et inscriptions avec notre plateforme intuitive.
+                </p>
+                <div class="animate__animated animate__fadeInUp animate__delay-2s">
+                    <a href="events.php" class="btn btn-light btn-lg me-3">
+                        <i class="bi bi-calendar3"></i> Voir les Événements
+                    </a>
+                    <a href="insert_event.php" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-plus-circle"></i> Créer un Événement
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-calendar-event display-1 animate__animated animate__pulse animate__infinite"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Aperçu Global</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card stat-card text-center border-0 shadow">
+                    <div class="card-body py-4">
+                        <i class="bi bi-calendar3 display-4 text-primary mb-3"></i>
+                        <h3 class="text-primary"><?= $stats['total_events'] ?></h3>
+                        <p class="card-text">Événements créés</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card text-center border-0 shadow">
+                    <div class="card-body py-4">
+                        <i class="bi bi-people display-4 text-success mb-3"></i>
+                        <h3 class="text-success"><?= $stats['total_participants'] ?></h3>
+                        <p class="card-text">Participants inscrits</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card text-center border-0 shadow">
+                    <div class="card-body py-4">
+                        <i class="bi bi-clipboard-check display-4 text-warning mb-3"></i>
+                        <h3 class="text-warning"><?= $stats['total_inscriptions'] ?></h3>
+                        <p class="card-text">Inscriptions totales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upcoming Events -->
+<section class="py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Événements à Venir</h2>
+            <a href="events.php" class="btn btn-outline-primary">Voir tous</a>
+        </div>
+        <div class="row g-4">
+            <?php if (empty($evenements)): ?>
+                <div class="col-12 text-center py-4">
+                    <i class="bi bi-calendar-x display-1 text-muted"></i>
+                    <h4 class="text-muted mt-3">Aucun événement à venir</h4>
+                </div>
+            <?php else: ?>
+                <?php foreach($evenements as $event): ?>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card event-card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0"><?= htmlspecialchars($event['title']) ?></h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text"><?= nl2br(htmlspecialchars(substr($event['description'], 0, 100))) ?>...</p>
+                            <div class="mb-2">
+                                <i class="bi bi-calendar-date text-primary"></i>
+                                <small class="text-muted"><?= date('d/m/Y', strtotime($event['event_date'])) ?></small>
+                            </div>
+                            <div class="mb-2">
+                                <i class="bi bi-geo-alt text-success"></i>
+                                <small class="text-muted"><?= htmlspecialchars($event['lieu']) ?></small>
+                            </div>
+                            <div class="mb-3">
+                                <i class="bi bi-tag text-warning"></i>
+                                <small class="text-muted"><?= number_format($event['prix'], 2, ',', ' ') ?> €</small>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="event_details.php?event_id=<?= $event['event_id'] ?>" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-eye"></i> Détails
+                            </a>
+                            <a href="inscrire_participant.php?event_id=<?= $event['event_id'] ?>" class="btn btn-sm btn-success">
+                                <i class="bi bi-person-plus"></i> Inscrire
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+    </div>
+</section>

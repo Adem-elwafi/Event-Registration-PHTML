@@ -1,0 +1,76 @@
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 fw-bold text-warning">
+                        <i class="bi bi-pencil-square me-2"></i>Modifier l'Événement
+                    </h1>
+                    <p class="text-muted mb-0">Modifiez les informations de l'événement</p>
+                </div>
+                <a href="event_details.php?event_id=<?= $event['event_id'] ?>" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Retour
+                </a>
+            </div>
+
+            <!-- Form -->
+            <div class="card shadow border-0">
+                <div class="card-header bg-warning text-dark py-3">
+                    <h5 class="mb-0"><i class="bi bi-calendar-check me-2"></i>Modifier l'Événement</h5>
+                </div>
+                <div class="card-body p-4">
+                    <?php if ($event): ?>
+                    <form action="update_event.php" method="post">
+                        <input type="hidden" name="event_id" value="<?= $event['event_id'] ?>">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="title" class="form-label">Titre de l'événement *</label>
+                                <input type="text" class="form-control" id="title" name="title" 
+                                       value="<?= htmlspecialchars($event['title']) ?>" required>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label for="event_date" class="form-label">Date de l'événement *</label>
+                                <input type="date" class="form-control" id="event_date" name="event_date" 
+                                       value="<?= $event['event_date'] ?>" required>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="4"><?= htmlspecialchars($event['description']) ?></textarea>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="lieu" class="form-label">Lieu *</label>
+                                <input type="text" class="form-control" id="lieu" name="lieu" 
+                                       value="<?= htmlspecialchars($event['lieu']) ?>" required>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="prix" class="form-label">Prix d'entrée (€)</label>
+                                <input type="number" class="form-control" id="prix" name="prix" 
+                                       step="0.01" min="0" value="<?= $event['prix'] ?>">
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2 justify-content-end">
+                            <a href="event_details.php?event_id=<?= $event['event_id'] ?>" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-2"></i>Annuler
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bi bi-check-circle me-2"></i>Mettre à jour
+                            </button>
+                        </div>
+                    </form>
+                    <?php else: ?>
+                        <div class="alert alert-danger text-center">
+                            <i class="bi bi-exclamation-triangle"></i> Événement non trouvé
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

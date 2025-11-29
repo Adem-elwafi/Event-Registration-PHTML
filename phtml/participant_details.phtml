@@ -1,0 +1,127 @@
+<div class="container py-4">
+    <?php if ($participant): ?>
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h2 fw-bold text-success"><?= htmlspecialchars($participant['name']) ?></h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.php">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="participants.php">Participants</a></li>
+                        <li class="breadcrumb-item active">Détails</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="btn-group">
+                <a href="participants.php" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Retour
+                </a>
+                <a href="update_participant.php?participant_id=<?= $participant['participant_id'] ?>" 
+                   class="btn btn-warning">
+                    <i class="bi bi-pencil me-2"></i>Modifier
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Participant Info -->
+            <div class="col-lg-6">
+                <div class="card shadow border-0 mb-4">
+                    <div class="card-header bg-success text-white py-3">
+                        <h5 class="mb-0"><i class="bi bi-person-badge me-2"></i>Informations Personnelles</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-muted">Nom complet</label>
+                                <p class="fs-5">
+                                    <i class="bi bi-person text-success me-2"></i>
+                                    <?= htmlspecialchars($participant['name']) ?>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-muted">Email</label>
+                                <p class="fs-5">
+                                    <i class="bi bi-envelope text-primary me-2"></i>
+                                    <?= htmlspecialchars($participant['email']) ?>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-muted">Téléphone</label>
+                                <p class="fs-5">
+                                    <i class="bi bi-phone text-info me-2"></i>
+                                    <?= $participant['phone'] ? htmlspecialchars($participant['phone']) : '<span class="text-muted">Non renseigné</span>' ?>
+                                </p>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-muted">Date d'inscription</label>
+                                <p class="fs-5">
+                                    <i class="bi bi-calendar-plus text-warning me-2"></i>
+                                    <?= date('d/m/Y à H:i', strtotime($participant['created_at'])) ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events List -->
+            <div class="col-lg-6">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-info text-white py-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Événements Inscrits (<?= count($events) ?>)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <?php if (empty($events)): ?>
+                            <div class="text-center text-muted py-3">
+                                <i class="bi bi-calendar-x display-6"></i>
+                                <p class="mt-2 mb-0">Aucune inscription</p>
+                                <a href="inscrire_participant.php?participant_id=<?= $participant['participant_id'] ?>" 
+                                   class="btn btn-success btn-sm mt-2">
+                                    <i class="bi bi-person-plus"></i> Inscrire à un événement
+                                </a>
+                            </div>
+                        <?php else: ?>
+                            <div class="list-group list-group-flush">
+                                <?php foreach($events as $event): ?>
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1"><?= htmlspecialchars($event['title']) ?></h6>
+                                        <small class="text-muted">
+                                            <i class="bi bi-calendar-date me-1"></i>
+                                            <?= date('d/m/Y', strtotime($event['event_date'])) ?>
+                                            • 
+                                            <i class="bi bi-geo-alt me-1"></i>
+                                            <?= htmlspecialchars($event['lieu']) ?>
+                                        </small>
+                                    </div>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="event_details.php?event_id=<?= $event['event_id'] ?>" 
+                                           class="btn btn-outline-info btn-sm">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="desinscrire.php?participant_id=<?= $participant['participant_id'] ?>&event_id=<?= $event['event_id'] ?>" 
+                                           class="btn btn-outline-danger btn-sm"
+                                           onclick="return confirm('Désinscrire ce participant de l\\'événement ?')">
+                                            <i class="bi bi-person-dash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-danger text-center">
+            <i class="bi bi-exclamation-triangle display-4"></i>
+            <h3 class="mt-3">Participant non trouvé</h3>
+            <a href="participants.php" class="btn btn-primary mt-2">Retour aux participants</a>
+        </div>
+    <?php endif; ?>
+</div>

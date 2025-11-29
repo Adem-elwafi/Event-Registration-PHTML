@@ -1,0 +1,50 @@
+<div class="container py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="h3 fw-bold text-primary">
+                <i class="bi bi-shield-lock me-2"></i>Tableau de Bord Administrateur
+            </h1>
+            <p class="text-muted">Bienvenue Administrateur ! Gérez tous les aspects des événements.</p>
+        </div>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card stat-card text-center border-0 shadow">
+                <div class="card-body py-4">
+                    <i class="bi bi-calendar3 display-4 text-primary mb-3"></i>
+                    <h3 class="text-primary"><?= $stats['total_events'] ?></h3>
+                    <p class="card-text">Événements créés</p>
+                    <a href="events.php" class="btn btn-outline-primary btn-sm mt-2">Gérer</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card text-center border-0 shadow">
+                <div class="card-body py-4">
+                    <i class="bi bi-people display-4 text-success mb-3"></i>
+                    <h3 class="text-success"><?= $stats['total_participants'] ?></h3>
+                    <p class="card-text">Participants inscrits</p>
+                    <a href="participants.php" class="btn btn-outline-success btn-sm mt-2">Gérer</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card text-center border-0 shadow">
+                <div class="card-body py-4">
+                    <i class="bi bi-clipboard-check display-4 text-warning mb-3"></i>
+                    <h3 class="text-warning"><?= $stats['total_inscriptions'] ?></h3>
+                    <p class="card-text">Inscriptions totales</p>
+                    <a href="inscriptions.php" class="btn btn-outline-warning btn-sm mt-2">Gérer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col">
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                Utilisez les liens ci-dessus pour gérer les événements, participants et inscriptions.
+            </div>
+        </div>
+    </div>
+</div>

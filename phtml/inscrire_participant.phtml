@@ -1,0 +1,113 @@
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h1 class="h3 fw-bold text-success">
+                        <i class="bi bi-person-plus me-2"></i>Inscrire un Participant
+                    </h1>
+                    <p class="text-muted mb-0">Inscrivez un participant à un événement</p>
+                </div>
+                <a href="inscriptions.php" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left me-2"></i>Retour
+                </a>
+            </div>
+
+            <!-- Messages -->
+            <?php if (isset($success)): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>
+                    <?= $success ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($error)): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    <?= $error ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <?php endif; ?>
+
+            <!-- Form -->
+            <div class="card shadow border-0">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0"><i class="bi bi-clipboard-plus me-2"></i>Nouvelle Inscription</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form action="inscrire_participant.php" method="post">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="participant_id" class="form-label">Participant *</label>
+                                <select class="form-select" id="participant_id" name="participant_id" required>
+                                    <option value="">Choisir un participant...</option>
+                                    <?php foreach($participants as $participant): ?>
+                                    <option value="<?= $participant['participant_id'] ?>">
+                                        <?= htmlspecialchars($participant['name']) ?> (<?= htmlspecialchars($participant['email']) ?>)
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="form-text">
+                                    <a href="insert_participant.php" class="text-decoration-none">
+                                        <i class="bi bi-plus-circle"></i> Ajouter un nouveau participant
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <label for="event_id" class="form-label">Événement *</label>
+                                <select class="form-select" id="event_id" name="event_id" required>
+                                    <option value="">Choisir un événement...</option>
+                                    <?php foreach($events as $event): ?>
+                                    <option value="<?= $event['event_id'] ?>">
+                                        <?= htmlspecialchars($event['title']) ?> 
+                                        (<?= date('d/m/Y', strtotime($event['event_date'])) ?> - <?= htmlspecialchars($event['lieu']) ?>)
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="form-text">
+                                    <a href="insert_event.php" class="text-decoration-none">
+                                        <i class="bi bi-plus-circle"></i> Créer un nouvel événement
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2 justify-content-end">
+                            <button type="reset" class="btn btn-secondary">
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>Réinitialiser
+                            </button>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle me-2"></i>Confirmer l'inscription
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card bg-light border-0">
+                        <div class="card-body text-center">
+                            <i class="bi bi-people display-6 text-primary"></i>
+                            <h4 class="mt-2"><?= count($participants) ?></h4>
+                            <p class="text-muted mb-0">Participants total</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card bg-light border-0">
+                        <div class="card-body text-center">
+                            <i class="bi bi-calendar-event display-6 text-success"></i>
+                            <h4 class="mt-2"><?= count($events) ?></h4>
+                            <p class="text-muted mb-0">Événements à venir</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

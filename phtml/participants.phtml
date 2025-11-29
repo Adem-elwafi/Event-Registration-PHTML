@@ -1,0 +1,95 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 fw-bold text-success">
+                    <i class="bi bi-people me-2"></i>Gestion des Participants
+                </h1>
+                <a href="insert_participant.php" class="btn btn-success">
+                    <i class="bi bi-person-plus me-2"></i>Nouveau Participant
+                </a>
+            </div>
+            <p class="text-muted">Gérez tous les participants de vos événements</p>
+        </div>
+    </div>
+
+    <!-- Participants Table -->
+    <div class="card shadow border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Liste des Participants</h5>
+        </div>
+        <div class="card-body p-0">
+            <?php if (empty($participants)): ?>
+                <div class="text-center py-5">
+                    <i class="bi bi-person-x display-1 text-muted"></i>
+                    <h4 class="text-muted mt-3">Aucun participant enregistré</h4>
+                    <a href="insert_participant.php" class="btn btn-success mt-3">
+                        <i class="bi bi-person-plus"></i> Ajouter le premier participant
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nom</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Inscriptions</th>
+                                <th>Date d'ajout</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($participants as $participant): ?>
+                            <tr>
+                                <td>
+                                    <strong><?= htmlspecialchars($participant['name']) ?></strong>
+                                </td>
+                                <td>
+                                    <i class="bi bi-envelope text-muted me-1"></i>
+                                    <?= htmlspecialchars($participant['email']) ?>
+                                </td>
+                                <td>
+                                    <?php if ($participant['phone']): ?>
+                                        <i class="bi bi-phone text-muted me-1"></i>
+                                        <?= htmlspecialchars($participant['phone']) ?>
+                                    <?php else: ?>
+                                        <span class="text-muted">Non renseigné</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary"><?= $participant['nb_inscriptions'] ?></span>
+                                </td>
+                                <td>
+                                    <small class="text-muted">
+                                        <?= date('d/m/Y', strtotime($participant['created_at'])) ?>
+                                    </small>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="participant_details.php?participant_id=<?= $participant['participant_id'] ?>" 
+                                           class="btn btn-outline-info" title="Voir">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="update_participant.php?participant_id=<?= $participant['participant_id'] ?>" 
+                                           class="btn btn-outline-warning" title="Modifier">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="delete_participant.php?participant_id=<?= $participant['participant_id'] ?>" 
+                                           class="btn btn-outline-danger" title="Supprimer"
+                                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce participant ?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 fw-bold text-info">
+                    <i class="bi bi-clipboard-check me-2"></i>Gestion des Inscriptions
+                </h1>
+                <a href="inscrire_participant.php" class="btn btn-success">
+                    <i class="bi bi-person-plus me-2"></i>Nouvelle Inscription
+                </a>
+            </div>
+            <p class="text-muted">Suivez toutes les inscriptions aux événements</p>
+        </div>
+    </div>
+
+    <!-- Inscriptions Table -->
+    <div class="card shadow border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Liste des Inscriptions</h5>
+        </div>
+        <div class="card-body p-0">
+            <?php if (empty($inscriptions)): ?>
+                <div class="text-center py-5">
+                    <i class="bi bi-clipboard-x display-1 text-muted"></i>
+                    <h4 class="text-muted mt-3">Aucune inscription enregistrée</h4>
+                    <a href="inscrire_participant.php" class="btn btn-success mt-3">
+                        <i class="bi bi-person-plus"></i> Créer la première inscription
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Participant</th>
+                                <th>Événement</th>
+                                <th>Date événement</th>
+                                <th>Date inscription</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($inscriptions as $inscription): ?>
+                            <tr>
+                                <td>
+                                    <div>
+                                        <strong><?= htmlspecialchars($inscription['participant_name']) ?></strong>
+                                        <br>
+                                        <small class="text-muted"><?= htmlspecialchars($inscription['participant_email']) ?></small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong><?= htmlspecialchars($inscription['event_title']) ?></strong>
+                                </td>
+                                <td>
+                                    <?= date('d/m/Y', strtotime($inscription['event_date'])) ?>
+                                </td>
+                                <td>
+                                    <small class="text-muted">
+                                        <?= date('d/m/Y H:i', strtotime($inscription['registration_date'])) ?>
+                                    </small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Confirmée
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="event_details.php?event_id=<?= $inscription['event_id'] ?>" 
+                                           class="btn btn-outline-info" title="Voir événement">
+                                            <i class="bi bi-calendar-event"></i>
+                                        </a>
+                                        <a href="participant_details.php?participant_id=<?= $inscription['participant_id'] ?>" 
+                                           class="btn btn-outline-primary" title="Voir participant">
+                                            <i class="bi bi-person"></i>
+                                        </a>
+                                        <a href="desinscrire.php?participant_id=<?= $inscription['participant_id'] ?>&event_id=<?= $inscription['event_id'] ?>" 
+                                           class="btn btn-outline-danger" title="Désinscrire"
+                                           onclick="return confirm('Êtes-vous sûr de vouloir désinscrire ce participant ?')">
+                                            <i class="bi bi-person-dash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

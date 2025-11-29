@@ -1,0 +1,88 @@
+<div class="container py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 fw-bold text-primary">
+                    <i class="bi bi-calendar3 me-2"></i>Gestion des Événements
+                </h1>
+                <a href="insert_event.php" class="btn btn-success">
+                    <i class="bi bi-plus-circle me-2"></i>Nouvel Événement
+                </a>
+            </div>
+            <p class="text-muted">Gérez tous vos événements en un seul endroit</p>
+        </div>
+    </div>
+
+    <!-- Events Table -->
+    <div class="card shadow border-0">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Liste des Événements</h5>
+        </div>
+        <div class="card-body p-0">
+            <?php if (empty($events)): ?>
+                <div class="text-center py-5">
+                    <i class="bi bi-calendar-x display-1 text-muted"></i>
+                    <h4 class="text-muted mt-3">Aucun événement créé</h4>
+                    <a href="insert_event.php" class="btn btn-primary mt-3">
+                        <i class="bi bi-plus-circle"></i> Créer le premier événement
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Titre</th>
+                                <th>Date</th>
+                                <th>Lieu</th>
+                                <th>Prix</th>
+                                <th>Inscriptions</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($events as $event): ?>
+                            <tr>
+                                <td>
+                                    <strong><?= htmlspecialchars($event['title']) ?></strong>
+                                    <?php if (strtotime($event['event_date']) < time()): ?>
+                                        <span class="badge bg-secondary ms-1">Terminé</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?= date('d/m/Y', strtotime($event['event_date'])) ?></td>
+                                <td><?= htmlspecialchars($event['lieu']) ?></td>
+                                <td><?= number_format($event['prix'], 2, ',', ' ') ?> €</td>
+                                <td>
+                                    <span class="badge bg-primary"><?= $event['nb_inscriptions'] ?></span>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="event_details.php?event_id=<?= $event['event_id'] ?>" 
+                                           class="btn btn-outline-info" title="Voir">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="update_event.php?event_id=<?= $event['event_id'] ?>" 
+                                           class="btn btn-outline-warning" title="Modifier">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="delete_event.php?event_id=<?= $event['event_id'] ?>" 
+                                           class="btn btn-outline-danger" title="Supprimer"
+                                           onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        <a href="inscrire_participant.php?event_id=<?= $event['event_id'] ?>" 
+                                           class="btn btn-outline-success" title="Inscrire un participant">
+                                            <i class="bi bi-person-plus"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
