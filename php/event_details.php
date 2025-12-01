@@ -9,7 +9,7 @@ $event = $query->fetch();
 
 // Récupérer les participants inscrits
 $participantsQuery = $bdd->prepare('SELECT p.* FROM participants p 
-                                   JOIN registrations r ON p.participant_id = r.participant_id 
+                                   JOIN inscriptions r ON p.participant_id = r.participant_id 
                                    WHERE r.event_id = ?');
 $participantsQuery->execute([$_GET['event_id']]);
 $participants = $participantsQuery->fetchAll();

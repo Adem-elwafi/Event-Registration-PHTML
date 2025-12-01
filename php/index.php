@@ -11,7 +11,7 @@ $evenements = $query->fetchAll();
 $statsQuery = $bdd->query('SELECT 
     (SELECT COUNT(*) FROM events) as total_events,
     (SELECT COUNT(*) FROM participants) as total_participants,
-    (SELECT COUNT(*) FROM registrations) as total_inscriptions');
+    (SELECT COUNT(*) FROM inscriptions) as total_inscriptions');
 $stats = $statsQuery->fetch();
 
 $template = "index";

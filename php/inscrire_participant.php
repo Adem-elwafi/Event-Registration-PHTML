@@ -16,13 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Vérifier si l'inscription existe déjà
-        $checkQuery = $bdd->prepare('SELECT * FROM registrations WHERE participant_id = ? AND event_id = ?');
+        $checkQuery = $bdd->prepare('SELECT * FROM inscriptions WHERE participant_id = ? AND event_id = ?');
         $checkQuery->execute([$participant_id, $event_id]);
         
         if ($checkQuery->fetch()) {
             $error = "Ce participant est déjà inscrit à cet événement.";
         } else {
-            $sql = "INSERT INTO registrations (participant_id, event_id) VALUES (?, ?)";
+            $sql = "INSERT INTO inscriptions (participant_id, event_id) VALUES (?, ?)";
             $query = $bdd->prepare($sql);
             $query->execute([$participant_id, $event_id]);
 

@@ -5,7 +5,7 @@ require_once __DIR__ . '/dbconnect.php';
 
 // Récupérer les événements auxquels le client est inscrit
 $query = $bdd->prepare('SELECT e.* FROM events e 
-                       JOIN registrations r ON e.event_id = r.event_id 
+                       JOIN inscriptions r ON e.event_id = r.event_id 
                        JOIN participants p ON r.participant_id = p.participant_id
                        WHERE p.email = ?
                        ORDER BY e.event_date DESC');

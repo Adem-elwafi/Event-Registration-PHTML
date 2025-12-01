@@ -28,14 +28,14 @@ if (!isAdmin()) { // Seulement pour les clients
         }
         
         // Vérifier si déjà inscrit
-        $checkInscription = $bdd->prepare("SELECT * FROM registrations WHERE participant_id = ? AND event_id = ?");
+        $checkInscription = $bdd->prepare("SELECT * FROM inscriptions WHERE participant_id = ? AND event_id = ?");
         $checkInscription->execute([$participant_id, $event_id]);
         
         if ($checkInscription->fetch()) {
             $error = "Vous êtes déjà inscrit à cet événement !";
         } else {
             // Créer l'inscription
-            $insertInscription = $bdd->prepare("INSERT INTO registrations (participant_id, event_id) VALUES (?, ?)");
+            $insertInscription = $bdd->prepare("INSERT INTO inscriptions (participant_id, event_id) VALUES (?, ?)");
             $insertInscription->execute([$participant_id, $event_id]);
             
             $success = "Félicitations ! Vous êtes maintenant inscrit à l'événement : " . $event['title'];

@@ -7,7 +7,7 @@ require_once __DIR__ . '/dbconnect.php';
 if (isset($_GET['event_id'])) {
     try {
         // Delete registrations linked to this event
-        $deleteRegistrations = $bdd->prepare("DELETE FROM registrations WHERE event_id = ?");
+        $deleteRegistrations = $bdd->prepare("DELETE FROM inscriptions WHERE event_id = ?");
         $deleteRegistrations->execute([$_GET['event_id']]);
         // Delete the event itself
         $deleteEvent = $bdd->prepare("DELETE FROM events WHERE event_id = ?");

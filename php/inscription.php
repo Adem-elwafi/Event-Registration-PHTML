@@ -8,7 +8,7 @@ $query = $bdd->prepare('SELECT r.*,
                        p.email as participant_email,
                        e.title as event_title,
                        e.event_date as event_date
-                       FROM registrations r
+                       FROM inscriptions r
                        JOIN participants p ON r.participant_id = p.participant_id
                        JOIN events e ON r.event_id = e.event_id
                        ORDER BY r.registration_date DESC');

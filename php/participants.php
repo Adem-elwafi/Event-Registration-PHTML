@@ -5,9 +5,9 @@ redirectIfNotLoggedIn();
 include 'dbconnect.php';
 
 $query = $bdd->prepare('SELECT p.*, 
-                       COUNT(r.registration_id) as nb_inscriptions
+                       COUNT(r.inscription_id) as nb_inscriptions
                        FROM participants p 
-                       LEFT JOIN registrations r ON p.participant_id = r.participant_id 
+                       LEFT JOIN inscriptions r ON p.participant_id = r.participant_id 
                        GROUP BY p.participant_id 
                        ORDER BY p.name ASC');
 $query->execute();
